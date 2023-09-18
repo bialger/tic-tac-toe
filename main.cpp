@@ -6,16 +6,35 @@
 #include "robotTurn.cpp"
 
 int main() {
-    GameFieldElements gameField[3][3];
+    GameFieldElement gameField[3][3];
     GameState gameState = gameContinues;
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
-            gameField[i][j] = space; // TODO: refactor with enum - it should be in printGameField.cpp
+            gameField[i][j] = space;
         }
     }
-    printGameField(gameField);
-    playerTurn(gameField);
-    printGameField(gameField);
-    std::cout << (isWindows() ? "Windows" : "Not Windows") << std::endl;
+    while (gameState == gameContinues) {
+        playerTurn(gameField);
+        robotTurn(gameField);
+        printGameField(gameField);
+        gameState = getGameState(gameField);
+    }
+    std::string result;
+    switch (gameState) {
+        case playerLost:
+            result = "Player lost!\n";
+            break;
+        case playerWon:
+            result = "Player won!\n";
+            break;
+        case draw:
+            result = "A draw!\n";
+            break;
+        default:
+            result = "Oops, something went wrong!\n";
+            break;
+    }
+    std::cout << result;
+    std::cout << "Thank you for playing, see you later!" << std::endl;
     return 0;
 }
