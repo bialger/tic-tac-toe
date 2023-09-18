@@ -1,7 +1,7 @@
 #include <iostream>
-#include "gameFieldElements.h"
+#include "gameFieldElement.h"
 
-void playerTurn(GameFieldElements ( &gameField )[3][3]) {
+void playerTurn(GameFieldElement ( &gameField )[3][3]) {
     short x, y;
     bool correctInput = false;
     while (!correctInput) {
@@ -10,7 +10,7 @@ void playerTurn(GameFieldElements ( &gameField )[3][3]) {
         if (x < 1 || x > 3 || y < 1 || y > 3) {
             std::cout << "Enter correct value (from 1 to 3)";
         }
-        else if (gameField[x - 1][y - 1] != GameFieldElements::space) { //fixed
+        else if (gameField[x - 1][y - 1] != GameFieldElement::space) { //fixed
             std::cout << "This cell is occupied, enter coordinates of free cell";
         }
         else {
@@ -18,5 +18,5 @@ void playerTurn(GameFieldElements ( &gameField )[3][3]) {
         }
         std::cout << '\n';
     }
-    gameField[x - 1][y - 1] = GameFieldElements::cross;
+    gameField[x - 1][y - 1] = GameFieldElement::cross;
 }
