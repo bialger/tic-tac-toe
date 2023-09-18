@@ -1,20 +1,28 @@
 #include <iostream>
-char findSymb(int x){
+#include "gameFieldElements.h"
+char findSymbol(int x){
     switch (x){
-        case -1: return ' ';
-        case 0: return 'x';
-        case 1: return 'o';
+        case space: return ' ';
+        case cross: return 'x';
+        case null: return 'o';
         default:
             return ' ';
     }
 }
 
 void printGameField(int(&gameField)[3][3]) {
-    for (int i = 0; i < 3; i++) {
-        //TODO: refactor the code, also use enum instead of int in gameField
-        std::cout << findSymb(gameField[i][0]) << '|' << findSymb(gameField[i][1]) << '|' << findSymb(gameField[i][2]) << '\n';
-        if (i != 2) {
-            std::cout << '_' << '_' << '_' << '_' << '_' << '\n';
-        }
+    std::cout <<"┌"<<"─"<<"┬"<<"─"<<"┬"<<"─"<<"┐"<< '\n';
+    std::cout <<"│"<<findSymbol(gameField[0][0]) <<"│"<<findSymbol(gameField[0][1])<<"│"<<findSymbol(gameField[0][2])<<"│"<<'\n';
+    std::cout<<"├"<<"─"<<"┼"<<"─"<<"┼"<<"─"<<"┤"<<'\n';
+    std::cout <<"│"<<findSymbol(gameField[1][0]) <<"│"<<findSymbol(gameField[1][1])<<"│"<<findSymbol(gameField[1][2])<<"│"<<'\n';
+    std::cout<<"├"<<"─"<<"┼"<<"─"<<"┼"<<"─"<<"┤"<<'\n';
+    std::cout <<"│"<<findSymbol(gameField[2][0]) <<"│"<<findSymbol(gameField[2][1])<<"│"<<findSymbol(gameField[2][2])<<"│"<<'\n';
+    std::cout <<"└"<<"─"<<"┴"<<"─"<<"┴"<<"─"<<"┘"<<"\n";
     }
-}
+//┌─┬─┬─┐
+//│ │ │ │
+//├─┼─┼─┤
+//│ │ │ │
+//├─┼─┼─┤
+//│ │ │ │
+//└─┴─┴─┘
