@@ -1,4 +1,5 @@
 #include <iostream>
+#include "gameState.h"
 #include "printGameField.cpp"
 #include "getGameState.cpp"
 #include "playerTurn.cpp"
@@ -6,6 +7,7 @@
 
 int main() {
     int gameField[3][3];
+    GameState gameState = gameContinues;
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
             gameField[i][j] = -1; // TODO: refactor with enum - it should be in printGameField.cpp
