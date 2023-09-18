@@ -2,7 +2,7 @@
 #include "gameState.h"
 
 
- GameState getGameState(int arr[3][3]){ // TODO: refactor to Code Standard, also change function type to int or enum
+ GameState getGameState(GameFieldElements arr[3][3]){ // TODO: refactor to Code Standard, also change function type to int or enum
     for (int i=0; i<3; ++i){
         if ((arr[i][0]==arr[i][1]==arr[i][2]==cross)||(arr[0][i]==arr[1][i]==arr[2][i]==cross)){
             return playerWon;
