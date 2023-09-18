@@ -16,6 +16,6 @@ int main() {
     printGameField(gameField);
     playerTurn(gameField);
     printGameField(gameField);
-    std::cout << "Test" << std::endl;
+    std::cout << (isWindows() ? "Windows" : "Not Windows") << std::endl;
     return 0;
 }
