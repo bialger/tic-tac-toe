@@ -1,5 +1,4 @@
 #include <iostream>
-#include "printGameField.cpp"
 
 void playerTurn(int ( &gameField )[3][3]) {
     short x, y;
