@@ -1,4 +1,5 @@
 #include <iostream>
+#include "gameFieldElements.h"
 
 void playerTurn(int ( &gameField )[3][3]) {
     short x, y;
@@ -8,12 +9,12 @@ void playerTurn(int ( &gameField )[3][3]) {
         if (x < 0 || x > 3 || y < 0 || y > 3) {
             std::cout << "Введите корректное значение";
         }
-        else if (gameField[x][y] != -1) { //TODO: refactor with enum
+        else if (gameField[x][y] != GameFieldElements::space) { //fixed
             std::cout << "Эта клетка занята";
         }
         else {
             correct_input = true;
         }
     }
-        gameField[x][y] = 1;
+        gameField[x][y] = GameFieldElements::cross;
 }
