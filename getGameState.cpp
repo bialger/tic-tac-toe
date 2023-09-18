@@ -1,28 +1,37 @@
-#include "gameFieldElements.h"
+#include "gameFieldElement.h"
 #include "gameState.h"
 
 
- GameState getGameState(GameFieldElements arr[3][3]){ // TODO: refactor to Code Standard, also change function type to int or enum
+ GameState getGameState(GameFieldElement gameField[3][3]){
+    GameState result=draw;
     for (int i=0; i<3; ++i){
-        if ((arr[i][0]==arr[i][1]==arr[i][2]==cross)||(arr[0][i]==arr[1][i]==arr[2][i]==cross)){
-            return playerWon;
+        if ((gameField[i][0]==gameField[i][1]==gameField[i][2]==cross)||
+            (gameField[0][i]==gameField[1][i]==gameField[2][i]==cross)){
+            result = playerWon;
+            break;
         }
-        if ((arr[0][i]==arr[1][i]==arr[2][i]==null) || (arr[i][0]==arr[i][1]==arr[i][2]==null)){
-            return playerLost;
+        if ((gameField[0][i]==gameField[1][i]==gameField[2][i]==null) ||
+            (gameField[i][0]==gameField[i][1]==gameField[i][2]==null)){
+            result = playerLost;
+            break;
         }
     }
-    if ((arr[0][0]==arr[1][1]==arr[2][2]==cross)||(arr[0][2]==arr[1][1]==arr[2][0]==cross)){
-        return playerWon;
+    if ((gameField[0][0]==gameField[1][1]==gameField[2][2]==cross)||
+        (gameField[0][2]==gameField[1][1]==gameField[2][0]==cross)){
+        result = playerWon;
     }
-    if ((arr[0][0]==arr[1][1]==arr[2][2]==null)||(arr[0][2]==arr[1][1]==arr[2][0]==null)){
-        return playerLost;
+    else if ((gameField[0][0]==gameField[1][1]==gameField[2][2]==null)||
+        (gameField[0][2]==gameField[1][1]==gameField[2][0]==null)){
+        result = playerLost;
     }
-    for (int i=0; i<3; ++i){
-        for (int j=0; j<3; ++j){
-            if (arr[i][j]==-1){
-                return gameContinues;
+    else {
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                if (gameField[i][j] == space) {
+                    result = gameContinues;
+                }
             }
         }
     }
-    return draw;
+    return result;
 }
