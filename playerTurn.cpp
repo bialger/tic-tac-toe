@@ -1,20 +1,22 @@
 #include <iostream>
 #include "gameFieldElements.h"
 
-void playerTurn(int ( &gameField )[3][3]) {
+void playerTurn(GameFieldElements ( &gameField )[3][3]) {
     short x, y;
-    bool correct_input = false;
-    while (!correct_input) {
+    bool correctInput = false;
+    while (!correctInput) {
+        std::cout << "Enter coordinates of your turn (row from up to down and than columns from left to right): ";
         std::cin >> x >> y;
-        if (x < 0 || x > 3 || y < 0 || y > 3) {
-            std::cout << "Введите корректное значение";
+        if (x < 1 || x > 3 || y < 1 || y > 3) {
+            std::cout << "Enter correct value (from 1 to 3)";
         }
-        else if (gameField[x][y] != GameFieldElements::space) { //fixed
-            std::cout << "Эта клетка занята";
+        else if (gameField[x - 1][y - 1] != GameFieldElements::space) { //fixed
+            std::cout << "This cell is occupied, enter coordinates of free cell";
         }
         else {
-            correct_input = true;
+            correctInput = true;
         }
+        std::cout << '\n';
     }
-        gameField[x][y] = GameFieldElements::cross;
+    gameField[x - 1][y - 1] = GameFieldElements::cross;
 }

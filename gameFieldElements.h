@@ -8,4 +8,4 @@ enum GameFieldElements
     null
 };
 
-#endif // GameFieldElements
+#endif // GAMEFIELDELEMENTS_H_

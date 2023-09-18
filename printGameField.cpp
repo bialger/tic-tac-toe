@@ -10,7 +10,7 @@ char findSymbol(int x){
     }
 }
 
-void printGameField(int(&gameField)[3][3]) {
+void printGameField(GameFieldElements (&gameField)[3][3]) {
     std::cout <<"┌"<<"─"<<"┬"<<"─"<<"┬"<<"─"<<"┐"<< '\n';
     std::cout <<"│"<<findSymbol(gameField[0][0]) <<"│"<<findSymbol(gameField[0][1])<<"│"<<findSymbol(gameField[0][2])<<"│"<<'\n';
     std::cout<<"├"<<"─"<<"┼"<<"─"<<"┼"<<"─"<<"┤"<<'\n';
