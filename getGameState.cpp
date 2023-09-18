@@ -2,7 +2,7 @@
 #include "gameState.h"
 
 
- GameState getGameState(int gameField[3][3]){ // TODO: refactor to Code Standard, also change function type to int or enum
+ GameState getGameState(int gameField[3][3]){
     GameState result=draw;
     for (int i=0; i<3; ++i){
         if ((gameField[i][0]==gameField[i][1]==gameField[i][2]==cross) ||
