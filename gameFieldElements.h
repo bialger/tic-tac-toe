@@ -8,6 +8,4 @@ enum GameFieldElements
     null
 };
 
-extern GameFieldElements GAMEFIELDELEMENTS_H_;
-
 #endif // GameFieldElements
