@@ -22,13 +22,24 @@ bool isWindows() {
 }
 
 void printGameField(GameFieldElements (&gameField)[3][3]) {
-    std::cout <<"┌"<<"─"<<"┬"<<"─"<<"┬"<<"─"<<"┐"<< '\n';
-    std::cout <<"│"<<findSymbol(gameField[0][0]) <<"│"<<findSymbol(gameField[0][1])<<"│"<<findSymbol(gameField[0][2])<<"│"<<'\n';
-    std::cout<<"├"<<"─"<<"┼"<<"─"<<"┼"<<"─"<<"┤"<<'\n';
-    std::cout <<"│"<<findSymbol(gameField[1][0]) <<"│"<<findSymbol(gameField[1][1])<<"│"<<findSymbol(gameField[1][2])<<"│"<<'\n';
-    std::cout<<"├"<<"─"<<"┼"<<"─"<<"┼"<<"─"<<"┤"<<'\n';
-    std::cout <<"│"<<findSymbol(gameField[2][0]) <<"│"<<findSymbol(gameField[2][1])<<"│"<<findSymbol(gameField[2][2])<<"│"<<'\n';
-    std::cout <<"└"<<"─"<<"┴"<<"─"<<"┴"<<"─"<<"┘"<<"\n";
+    if (!isWindows()) {
+        std::cout <<"┌"<<"─"<<"┬"<<"─"<<"┬"<<"─"<<"┐"<< '\n';
+        std::cout <<"│"<<findSymbol(gameField[0][0]) <<"│"<<findSymbol(gameField[0][1])<<"│"<<findSymbol(gameField[0][2])<<"│"<<'\n';
+        std::cout<<"├"<<"─"<<"┼"<<"─"<<"┼"<<"─"<<"┤"<<'\n';
+        std::cout <<"│"<<findSymbol(gameField[1][0]) <<"│"<<findSymbol(gameField[1][1])<<"│"<<findSymbol(gameField[1][2])<<"│"<<'\n';
+        std::cout<<"├"<<"─"<<"┼"<<"─"<<"┼"<<"─"<<"┤"<<'\n';
+        std::cout <<"│"<<findSymbol(gameField[2][0]) <<"│"<<findSymbol(gameField[2][1])<<"│"<<findSymbol(gameField[2][2])<<"│"<<'\n';
+        std::cout <<"└"<<"─"<<"┴"<<"─"<<"┴"<<"─"<<"┘"<<"\n";
+    }
+    else {
+        std::cout <<char(213)<<char(196)<<"┬"<<char(196)<<"┬"<<char(196)<<"┐"<< '\n';
+        std::cout <<char(179)<<findSymbol(gameField[0][0]) <<char(179)<<findSymbol(gameField[0][1])<<char(179)<<findSymbol(gameField[0][2])<<char(179)<<'\n';
+        std::cout<<"├"<<char(196)<<"┼"<<char(196)<<"┼"<<char(196)<<"┤"<<'\n';
+        std::cout <<char(179)<<findSymbol(gameField[1][0]) <<char(179)<<findSymbol(gameField[1][1])<<char(179)<<findSymbol(gameField[1][2])<<char(179)<<'\n';
+        std::cout<<"├"<<char(196)<<"┼"<<char(196)<<"┼"<<char(196)<<"┤"<<'\n';
+        std::cout <<char(179)<<findSymbol(gameField[2][0]) <<char(179)<<findSymbol(gameField[2][1])<<char(179)<<findSymbol(gameField[2][2])<<char(179)<<'\n';
+        std::cout <<"└"<<char(196)<<"┴"<<char(196)<<"┴"<<char(196)<<"┘"<<"\n";
+    }
     }
 //┌─┬─┬─┐
 //│ │ │ │
