@@ -1,7 +1,7 @@
 #include <iostream>
 #include "gameFieldElements.h"
 
-void playerTurn(int ( &gameField )[3][3]) {
+void playerTurn(GameFieldElements ( &gameField )[3][3]) {
     short x, y;
     bool correct_input = false;
     while (!correct_input) {

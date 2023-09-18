@@ -11,9 +11,4 @@ enum GameState
     draw
 };
 
-// Declare (which is different from defining) a global variable, to be
-// visible by all who include this file.
-// The actual definition of the variable is in the gamestate.cpp file.
-extern GameState gameState;
-
 #endif // GAMESTATE_H_
