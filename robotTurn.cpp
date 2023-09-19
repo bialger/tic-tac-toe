@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include "gameFieldElement.h"
 
 void convertToCalculable(GameFieldElement gameField[3][3], int (&calculableGameField)[9]) {
@@ -48,6 +49,16 @@ void evaluateAvailableCells(int calculableGameField[9], int (&availableCells)[10
     }
 }
 
+bool makeMistake(int probability) {
+    std::random_device randomDevice;
+    std::mt19937 generator(randomDevice());
+    std::uniform_int_distribution<> distribution( 1, 100);
+    int attempt = distribution(generator);
+    std::cout << attempt << " < " << probability << " = " << ((probability - attempt) < 0) << '\n';
+    bool result = probability < attempt;
+    return result;
+}
+
 int miniMax(int calculableGameField[9], bool isMaximizer) {
     int human = -2;
     int robot = -1;
@@ -82,8 +93,7 @@ int miniMax(int calculableGameField[9], bool isMaximizer) {
     return score;
 }
 
-void robotTurn(GameFieldElement (&gameField)[3][3]) {
-    // TODO: implement accuracy
+void robotTurn(GameFieldElement (&gameField)[3][3], int accuracy) {
     int bestScore = -10000;
     int bestMove = -1;
     int calculableGameField[9];
@@ -94,11 +104,15 @@ void robotTurn(GameFieldElement (&gameField)[3][3]) {
         int moveID = availableCells[i];
         calculableGameField[moveID] = -1;
         int moveScore = miniMax(calculableGameField, false);
-        if (moveScore > bestScore) {
+        bool makeCorrectConclusion = !makeMistake(accuracy);
+        if (makeCorrectConclusion && moveScore > bestScore) {
             bestScore = moveScore;
             bestMove = moveID;
         }
         calculableGameField[moveID] = moveID;
+    }
+    if (bestMove == -1) {
+        bestMove = availableCells[1];
     }
     std::cout << "Computer`s turn: " << bestMove / 3 + 1 << ' ' << bestMove % 3 + 1 << "\n\n";
     gameField[bestMove / 3][bestMove % 3] = null;
