@@ -1,18 +1,19 @@
 #include <iostream>
+#include <random>
 #include "gameFieldElement.h"
 
-void convertToCalculable(GameFieldElement gameField[3][3], int (&result)[9]) {
+void convertToCalculable(GameFieldElement gameField[3][3], int (&calculableGameField)[9]) {
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
             switch (gameField[i][j]) {
                 case space:
-                    result[3 * i + j] = 3 * i + j;
+                    calculableGameField[3 * i + j] = 3 * i + j;
                     break;
                 case cross:
-                    result[3 * i + j] = -2;
+                    calculableGameField[3 * i + j] = -2;
                     break;
                 case null:
-                    result[3 * i + j] = -1;
+                    calculableGameField[3 * i + j] = -1;
                     break;
             }
         }
@@ -48,6 +49,15 @@ void evaluateAvailableCells(int calculableGameField[9], int (&availableCells)[10
     }
 }
 
+bool makeMistake(int probability) {
+    std::random_device randomDevice;
+    std::mt19937 generator(randomDevice());
+    std::uniform_int_distribution<> distribution( 1, 100);
+    int attempt = distribution(generator);
+    bool result = probability < attempt;
+    return result;
+}
+
 int miniMax(int calculableGameField[9], bool isMaximizer) {
     int human = -2;
     int robot = -1;
@@ -55,33 +65,34 @@ int miniMax(int calculableGameField[9], bool isMaximizer) {
     int availableCells[10];
     int score;
     convertToGameField(newGameField, calculableGameField);
+    GameState gameState = getGameState(newGameField);
     evaluateAvailableCells(calculableGameField, availableCells);
-    if (getGameState(newGameField) == playerWon) {
+    if (gameState == playerWon) {
         score = -10;
     }
-    else if (getGameState(newGameField) == playerLost) {
+    else if (gameState == playerLost) {
         score = 10;
     }
-    else if (getGameState(newGameField) == draw) {
+    else if (gameState == draw) {
         score = 0;
     }
     else {
         int bestScore = isMaximizer ? -10000 : 10000;
         for (int i = 1; i <= availableCells[0]; ++i) {
-            calculableGameField[availableCells[i]] = isMaximizer ? robot : human;
+            int moveID = availableCells[i];
+            calculableGameField[moveID] = isMaximizer ? robot : human;
             int moveScore = miniMax(calculableGameField, !isMaximizer);
             if (isMaximizer ? moveScore > bestScore : moveScore < bestScore) {
                 bestScore = moveScore;
             }
-            calculableGameField[availableCells[i]] = availableCells[i];
+            calculableGameField[moveID] = moveID;
         }
         score = bestScore;
     }
     return score;
 }
 
-void robotTurn(GameFieldElement (&gameField)[3][3]) {
-    // TODO: find the bug
+void robotTurn(GameFieldElement (&gameField)[3][3], int accuracy) {
     int bestScore = -10000;
     int bestMove = -1;
     int calculableGameField[9];
@@ -89,13 +100,18 @@ void robotTurn(GameFieldElement (&gameField)[3][3]) {
     convertToCalculable(gameField, calculableGameField);
     evaluateAvailableCells(calculableGameField, availableCells);
     for (int i = 1; i <= availableCells[0]; ++i) {
-        calculableGameField[availableCells[i]] = -1;
+        int moveID = availableCells[i];
+        calculableGameField[moveID] = -1;
         int moveScore = miniMax(calculableGameField, false);
-        if (moveScore > bestScore) {
+        bool makeCorrectConclusion = !makeMistake(accuracy);
+        if (makeCorrectConclusion && moveScore >= bestScore) {
             bestScore = moveScore;
-            bestMove = availableCells[i];
+            bestMove = moveID;
         }
-        calculableGameField[availableCells[i]] = availableCells[i];
+        calculableGameField[moveID] = moveID;
+    }
+    if (bestMove == -1) {
+        bestMove = availableCells[1];
     }
     std::cout << "Computer`s turn: " << bestMove / 3 + 1 << ' ' << bestMove % 3 + 1 << "\n\n";
     gameField[bestMove / 3][bestMove % 3] = null;
