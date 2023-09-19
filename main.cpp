@@ -13,6 +13,9 @@ int main() {
             gameField[i][j] = space;
         }
     }
+    std::cout << "This is a Tic-Tac-Toe implementation by bialger, dedulya-shershulya, Taieta and WannaBread.\n";
+    std::cout << "If you want to reach us, our GitHub repo link: https://github.com/bialger/tic-tac-toe.\n";
+    std::cout << "Enjoy the game!\n";
     while (gameState == gameContinues) {
         playerTurn(gameField);
         gameState = getGameState(gameField);

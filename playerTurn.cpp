@@ -6,7 +6,7 @@ void playerTurn(GameFieldElement ( &gameField )[3][3]) {
     int x, y;
     bool correctInput = false;
     while (!correctInput) {
-        std::cout << "Enter coordinates of your turn (row from up to down and than columns from left to right): ";
+        std::cout << "Enter coordinates of your turn (row from up to down and then columns from left to right): ";
         std::cin >> inputX;
         std::cin.ignore(1);
         std::cin >> inputY;

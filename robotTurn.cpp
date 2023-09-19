@@ -81,7 +81,7 @@ int miniMax(int calculableGameField[9], bool isMaximizer) {
 }
 
 void robotTurn(GameFieldElement (&gameField)[3][3]) {
-    // TODO: find the bug
+    // TODO: implement accuracy
     int bestScore = -10000;
     int bestMove = -1;
     int calculableGameField[9];
