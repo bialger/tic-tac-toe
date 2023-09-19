@@ -90,7 +90,7 @@ void robotTurn(GameFieldElement (&gameField)[3][3]) {
     evaluateAvailableCells(calculableGameField, availableCells);
     for (int i = 1; i <= availableCells[0]; ++i) {
         calculableGameField[availableCells[i]] = -1;
-        int moveScore = miniMax(calculableGameField, true);
+        int moveScore = miniMax(calculableGameField, false);
         if (moveScore > bestScore) {
             bestScore = moveScore;
             bestMove = availableCells[i];
