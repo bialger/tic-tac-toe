@@ -56,10 +56,10 @@ int miniMax(int calculableGameField[9], bool isMaximizer) {
     int score;
     convertToGameField(newGameField, calculableGameField);
     evaluateAvailableCells(calculableGameField, availableCells);
-    if (getGameState(newGameField) == (isMaximizer ? playerWon : playerLost)) {
+    if (getGameState(newGameField) == playerWon) {
         score = -10;
     }
-    else if (getGameState(newGameField) == (isMaximizer ? playerLost : playerWon)) {
+    else if (getGameState(newGameField) == playerLost) {
         score = 10;
     }
     else if (getGameState(newGameField) == draw) {
@@ -68,7 +68,7 @@ int miniMax(int calculableGameField[9], bool isMaximizer) {
     else {
         int bestScore = isMaximizer ? -10000 : 10000;
         for (int i = 1; i <= availableCells[0]; ++i) {
-            calculableGameField[availableCells[i]] = isMaximizer ? -1 : -2;
+            calculableGameField[availableCells[i]] = isMaximizer ? robot : human;
             int moveScore = miniMax(calculableGameField, !isMaximizer);
             if (isMaximizer ? moveScore > bestScore : moveScore < bestScore) {
                 bestScore = moveScore;
@@ -97,6 +97,6 @@ void robotTurn(GameFieldElement (&gameField)[3][3]) {
         }
         calculableGameField[availableCells[i]] = availableCells[i];
     }
-    std::cout << "Computer`s turn: " << bestMove / 3 + 1 << ' ' << bestMove % 3 + 1 << '\n';
+    std::cout << "Computer`s turn: " << bestMove / 3 + 1 << ' ' << bestMove % 3 + 1 << "\n\n";
     gameField[bestMove / 3][bestMove % 3] = null;
 }
