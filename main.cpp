@@ -7,7 +7,7 @@
 #include "robotTurn.cpp"
 
 int main() {
-    constexpr int minimalAccuracy = 70;
+    constexpr int minimalAccuracy = 75;
     constexpr int maximalAccuracy = 95;
     int accuracy;
     GameFieldElement gameField[3][3];

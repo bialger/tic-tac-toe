@@ -54,7 +54,6 @@ bool makeMistake(int probability) {
     std::mt19937 generator(randomDevice());
     std::uniform_int_distribution<> distribution( 1, 100);
     int attempt = distribution(generator);
-    std::cout << attempt << " < " << probability << " = " << ((probability - attempt) < 0) << '\n';
     bool result = probability < attempt;
     return result;
 }
@@ -105,7 +104,7 @@ void robotTurn(GameFieldElement (&gameField)[3][3], int accuracy) {
         calculableGameField[moveID] = -1;
         int moveScore = miniMax(calculableGameField, false);
         bool makeCorrectConclusion = !makeMistake(accuracy);
-        if (makeCorrectConclusion && moveScore > bestScore) {
+        if (makeCorrectConclusion && moveScore >= bestScore) {
             bestScore = moveScore;
             bestMove = moveID;
         }
