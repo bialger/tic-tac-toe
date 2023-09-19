@@ -68,7 +68,7 @@ int miniMax(int calculableGameField[9], bool isMaximizer) {
     else {
         int bestScore = isMaximizer ? -10000 : 10000;
         for (int i = 1; i <= availableCells[0]; ++i) {
-            calculableGameField[availableCells[i]] = -1;
+            calculableGameField[availableCells[i]] = isMaximizer ? -1 : -2;
             int moveScore = miniMax(calculableGameField, !isMaximizer);
             if (isMaximizer ? moveScore > bestScore : moveScore < bestScore) {
                 bestScore = moveScore;
