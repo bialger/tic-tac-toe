@@ -15,9 +15,12 @@ int main() {
     }
     while (gameState == gameContinues) {
         playerTurn(gameField);
-        robotTurn(gameField);
-        printGameField(gameField);
         gameState = getGameState(gameField);
+        if (gameState == gameContinues) {
+            robotTurn(gameField);
+            gameState = getGameState(gameField);
+        }
+        printGameField(gameField);
     }
     std::string result;
     switch (gameState) {

@@ -48,26 +48,55 @@ void evaluateAvailableCells(int calculableGameField[9], int (&availableCells)[10
     }
 }
 
-void robotTurn(GameFieldElement (&gameField)[3][3]) {
-    // TODO: finish a function
+int miniMax(int calculableGameField[9], bool isMaximizer) {
     int human = -2;
     int robot = -1;
-    int calculableGameField[9];
     GameFieldElement newGameField[3][3];
     int availableCells[10];
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 3; ++j) {
-            newGameField[i][j] = gameField[i][j];
-        }
-    }
-    convertToCalculable(newGameField, calculableGameField);
+    int score;
+    convertToGameField(newGameField, calculableGameField);
     evaluateAvailableCells(calculableGameField, availableCells);
-//    for (int i = 0; i < 9; ++i) {
-//        std::cout << calculableGameField[i] << ' ';
-//    }
-//    std::cout << '\n';
-//    for (int i = 0; i < 10; ++i) {
-//        std::cout << availableCells[i] << ' ';
-//    }
-//    std::cout << '\n';
+    if (getGameState(newGameField) == (isMaximizer ? playerWon : playerLost)) {
+        score = -10;
+    }
+    else if (getGameState(newGameField) == (isMaximizer ? playerLost : playerWon)) {
+        score = 10;
+    }
+    else if (getGameState(newGameField) == draw) {
+        score = 0;
+    }
+    else {
+        int bestScore = isMaximizer ? -10000 : 10000;
+        for (int i = 1; i <= availableCells[0]; ++i) {
+            calculableGameField[availableCells[i]] = -1;
+            int moveScore = miniMax(calculableGameField, !isMaximizer);
+            if (isMaximizer ? moveScore > bestScore : moveScore < bestScore) {
+                bestScore = moveScore;
+            }
+            calculableGameField[availableCells[i]] = availableCells[i];
+        }
+        score = bestScore;
+    }
+    return score;
+}
+
+void robotTurn(GameFieldElement (&gameField)[3][3]) {
+    // TODO: find the bug
+    int bestScore = -10000;
+    int bestMove = -1;
+    int calculableGameField[9];
+    int availableCells[10];
+    convertToCalculable(gameField, calculableGameField);
+    evaluateAvailableCells(calculableGameField, availableCells);
+    for (int i = 1; i <= availableCells[0]; ++i) {
+        calculableGameField[availableCells[i]] = -1;
+        int moveScore = miniMax(calculableGameField, true);
+        if (moveScore > bestScore) {
+            bestScore = moveScore;
+            bestMove = availableCells[i];
+        }
+        calculableGameField[availableCells[i]] = availableCells[i];
+    }
+    std::cout << "Computer`s turn: " << bestMove / 3 + 1 << ' ' << bestMove % 3 + 1 << '\n';
+    gameField[bestMove / 3][bestMove % 3] = null;
 }
