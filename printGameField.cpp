@@ -87,9 +87,10 @@ std::string boxSymbol(BoxSymbol symbol) {
 
 void printGameField(GameFieldElement (&gameField)[3][3]) {
     std::string field[7];
-    field[0] = boxSymbol(leftUpperCorner) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
-            boxSymbol(horizontalDownLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
-            boxSymbol(horizontalDownLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
+    field[0] = boxSymbol(leftUpperCorner) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalDownLine) + boxSymbol(horizontalLine) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalDownLine) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
             boxSymbol(rightUpperCorner) + '\n';
     field[1] = boxSymbol(verticalLine) + " " + findSymbol(gameField[0][0]) + " " +
             boxSymbol(verticalLine) + " " + findSymbol(gameField[0][1]) + " " +

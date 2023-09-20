@@ -1,8 +1,7 @@
 #include "gameFieldElement.h"
 #include "gameState.h"
 
-
- GameState getGameState(GameFieldElement gameField[3][3]){
+GameState getGameState(GameFieldElement gameField[3][3]){
     GameState result = draw;
     for (int i = 0; i < 3; ++i){
         if ((gameField[i][0] == cross && gameField[i][1] == cross && gameField[i][2] == cross) ||
