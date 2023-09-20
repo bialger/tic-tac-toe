@@ -1,14 +1,19 @@
 #include <iostream>
-#include "gameFieldElements.h"
-char findSymbol(int x){
-    switch (x){
-        case space: return ' ';
-        case cross: return 'x';
-        case null: return 'o';
-        default:
-            return ' ';
-    }
-}
+#include "gameFieldElement.h"
+
+enum BoxSymbol {
+    leftUpperCorner,
+    leftLowerCorner,
+    rightUpperCorner,
+    rightLowerCorner,
+    horizontalLine,
+    verticalLine,
+    crossLikeSymbol,
+    verticalLeftLine,
+    verticalRightLine,
+    horizontalUpLine,
+    horizontalDownLine
+};
 
 bool isWindows() {
     bool result =
@@ -17,28 +22,105 @@ bool isWindows() {
 #else
         false
 #endif
-        ;
+    ;
     return result;
 }
 
-void printGameField(GameFieldElements (&gameField)[3][3]) {
-    if (!isWindows()) {
-        std::cout <<"┌"<<"─"<<"┬"<<"─"<<"┬"<<"─"<<"┐"<< '\n';
-        std::cout <<"│"<<findSymbol(gameField[0][0]) <<"│"<<findSymbol(gameField[0][1])<<"│"<<findSymbol(gameField[0][2])<<"│"<<'\n';
-        std::cout<<"├"<<"─"<<"┼"<<"─"<<"┼"<<"─"<<"┤"<<'\n';
-        std::cout <<"│"<<findSymbol(gameField[1][0]) <<"│"<<findSymbol(gameField[1][1])<<"│"<<findSymbol(gameField[1][2])<<"│"<<'\n';
-        std::cout<<"├"<<"─"<<"┼"<<"─"<<"┼"<<"─"<<"┤"<<'\n';
-        std::cout <<"│"<<findSymbol(gameField[2][0]) <<"│"<<findSymbol(gameField[2][1])<<"│"<<findSymbol(gameField[2][2])<<"│"<<'\n';
-        std::cout <<"└"<<"─"<<"┴"<<"─"<<"┴"<<"─"<<"┘"<<"\n";
+char findSymbol(GameFieldElement x){
+    char answer;
+    switch (x) {
+        case space:
+            answer = ' ';
+            break;
+        case cross:
+            answer = 'X';
+            break;
+        case null:
+            answer =  'O';
+            break;
+        default:
+            answer = ' ';
+            break;
     }
-    else {
-        std::cout <<char(218)<<char(196)<<char(194)<<char(196)<<char(194)<<char(196)<<char(191)<< '\n';
-        std::cout <<char(179)<<findSymbol(gameField[0][0]) <<char(179)<<findSymbol(gameField[0][1])<<char(179)<<findSymbol(gameField[0][2])<<char(179)<<'\n';
-        std::cout<<char(195)<<char(196)<<char(197)<<char(196)<<char(197)<<char(196)<<char(180)<<'\n';
-        std::cout <<char(179)<<findSymbol(gameField[1][0]) <<char(179)<<findSymbol(gameField[1][1])<<char(179)<<findSymbol(gameField[1][2])<<char(179)<<'\n';
-        std::cout<<char(195)<<char(196)<<char(197)<<char(196)<<char(197)<<char(196)<<char(180)<<'\n';
-        std::cout <<char(179)<<findSymbol(gameField[2][0]) <<char(179)<<findSymbol(gameField[2][1])<<char(179)<<findSymbol(gameField[2][2])<<char(179)<<'\n';
-        std::cout <<char(192)<<char(196)<<char(193)<<char(196)<<char(193)<<char(196)<<char(217)<<"\n";
+    return answer;
+}
+
+std::string boxSymbol(BoxSymbol symbol) {
+    std::string result;
+    switch (symbol) {
+        case leftUpperCorner:
+            result = isWindows() ? std::string(1 , char(218)) : "┌";
+            break;
+        case leftLowerCorner:
+            result = isWindows() ? std::string(1 , char(192)) : "└";
+            break;
+        case rightUpperCorner:
+            result = isWindows() ? std::string(1 , char(191)) : "┐";
+            break;
+        case rightLowerCorner:
+            result = isWindows() ? std::string(1 , char(217)) : "┘";
+            break;
+        case horizontalLine:
+            result = isWindows() ? std::string(1 , char(196)) : "─";
+            break;
+        case verticalLine:
+            result = isWindows() ? std::string(1 , char(179)) : "│";
+            break;
+        case crossLikeSymbol:
+            result = isWindows() ? std::string(1 , char(197)) : "┼";
+            break;
+        case verticalRightLine:
+            result = isWindows() ? std::string(1 , char(195)) : "├";
+            break;
+        case verticalLeftLine:
+            result = isWindows() ? std::string(1 , char(180)) : "┤";
+            break;
+        case horizontalDownLine:
+            result = isWindows() ? std::string(1 , char(194)) : "┬";
+            break;
+        case horizontalUpLine:
+            result = isWindows() ? std::string(1 , char(193)) : "┴";
+            break;
+    }
+    return result;
+}
+
+void printGameField(GameFieldElement (&gameField)[3][3]) {
+    std::string field[7];
+    field[0] = boxSymbol(leftUpperCorner) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalDownLine) + boxSymbol(horizontalLine) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalDownLine) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
+            boxSymbol(rightUpperCorner) + '\n';
+    field[1] = boxSymbol(verticalLine) + " " + findSymbol(gameField[0][0]) + " " +
+            boxSymbol(verticalLine) + " " + findSymbol(gameField[0][1]) + " " +
+            boxSymbol(verticalLine) + " " + findSymbol(gameField[0][2]) + " " +
+            boxSymbol(verticalLine) + '\n';
+    field[2] = boxSymbol(verticalRightLine) + boxSymbol(horizontalLine) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +boxSymbol(crossLikeSymbol) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
+            boxSymbol(crossLikeSymbol) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
+            boxSymbol(horizontalLine) + boxSymbol(verticalLeftLine) + '\n';
+    field[3] = boxSymbol(verticalLine) + " " + findSymbol(gameField[1][0]) + " " +
+            boxSymbol(verticalLine) + " " + findSymbol(gameField[1][1]) + " " +
+            boxSymbol(verticalLine) + " " + findSymbol(gameField[1][2]) + " " +
+            boxSymbol(verticalLine) + '\n';
+    field[4] = boxSymbol(verticalRightLine) + boxSymbol(horizontalLine) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(crossLikeSymbol) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
+            boxSymbol(crossLikeSymbol) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
+            boxSymbol(horizontalLine) + boxSymbol(verticalLeftLine) + '\n';
+    field[5] = boxSymbol(verticalLine) + " " + findSymbol(gameField[2][0]) + " " +
+            boxSymbol(verticalLine) + " " + findSymbol(gameField[2][1]) + " " +
+            boxSymbol(verticalLine) + " " + findSymbol(gameField[2][2]) + " " +
+            boxSymbol(verticalLine) + '\n';
+    field[6] = boxSymbol(leftLowerCorner) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalUpLine) + boxSymbol(horizontalLine) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalUpLine) +
+            boxSymbol(horizontalLine) + boxSymbol(horizontalLine) + boxSymbol(horizontalLine) +
+            boxSymbol(rightLowerCorner) + '\n';
+    for (int i = 0; i < 7; ++i) {
+        std::cout << field[i];
     }
 }
 //┌─┬─┬─┐
